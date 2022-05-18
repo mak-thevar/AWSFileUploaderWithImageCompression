@@ -13,7 +13,7 @@
 	<RepositoryUrl>https://github.com/mak-thevar/AWSFileUploaderWithImageCompression</RepositoryUrl>
 	<PackageProjectUrl>https://github.com/mak-thevar/AWSFileUploaderWithImageCompression</PackageProjectUrl>
 	<RepositoryType>git</RepositoryType>
-	<PackageLicenseFile>..\LICENSE</PackageLicenseFile>
+	<PackageLicenseFile></PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
