@@ -26,7 +26,9 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Build solution and generate NuGet package
-      run:  dotnet pack -c Release -o out  
-    - name: Push generated package to GitHub registry
-      run: dotnet nuget push ./out/*.nupkg --api-key ${{secrets.PAT}} --skip-duplicate --no-symbols true 
+    - name: Push generated package to Nuget
+      id: publish_nuget
+      uses: rohith/publish-nuget@v2
+      with:
+        PROJECT_FILE_PATH: AWSFileUploaderWithImageCompression/AWSFileUploaderWithImageCompression.csproj
+        NUGET_KEY: ${{secrets.NUGET_KEY}}
