@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        source-url: https://nuget.pkg.github.com/<organization>/index.json
+        source-url: https://nuget.pkg.github.com/mak-thevar/index.json
       env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore dependencies
