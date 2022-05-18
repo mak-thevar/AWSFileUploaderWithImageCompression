@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <ApplicationIcon>uploaderIcon.ico</ApplicationIcon>
+	<Version>1.0.1</Version>
+	<Authors>Muthukumar Thevar</Authors>
+	<Description>A library for compressing, adding watermark and uploading the file into aws s3.</Description>
+	<PackageIcon>uploaderIcon.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/mak-thevar/AWSFileUploaderWithImageCompression</RepositoryUrl>
+	<PackageProjectUrl>https://github.com/mak-thevar/AWSFileUploaderWithImageCompression</PackageProjectUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageLicenseFile>E:\GitHUb\AWSFileUploaderWithImageCompression\LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="uploaderIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.9.2" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="11.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="uploaderIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

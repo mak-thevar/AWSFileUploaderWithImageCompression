@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AWSFileUploaderWithImageCompression.Test": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SECRET_KEY": "JjCfT0dFvb5LmPK/GyQsO/e3hU685nC9RKN09Bag",
+        "ACCESS_KEY": "AKIAWP4ZAOWDMMHNRIOV",
+        "BUCKET_NAME": "svappyassets"
+      }
+    }
+  }
+}
