@@ -1,4 +1,4 @@
-name: .NET
+name: Build,Test & Deploy
 
 on:
   push:
@@ -8,25 +8,31 @@ on:
 
 jobs:
   build:
-
+    name: build
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
-        source-url: https://nuget.pkg.github.com/${{github.repository_owner}}/index.json
-      env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Create the package
-      run: dotnet pack -c Release -o .
-    - name: Push generated package to Nuget
-      run: dotnet nuget push *.nupkg -k ${{secrets.NUGET_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+  deploypackage:
+     name: deploy to nuget
+     runs-on: ubuntu-latest
+     needs: test
+     steps:
+      - name: Create the package
+        run: dotnet pack -c Release -o .
+      - name: Push generated package to Nuget
+        run: dotnet nuget push *.nupkg -k ${{secrets.NUGET_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols

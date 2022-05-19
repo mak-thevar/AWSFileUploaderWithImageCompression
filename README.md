@@ -1,3 +1,6 @@
+![Build Status](https://github.com/mak-thevar/AWSFileUploaderWithImageCompression/actions/workflows/build_publish.yml/badge.svg)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555)](https://www.linkedin.com/in/mak11/)
+
 # AWSFileUploaderWithImageCompression
 A library for compressing, adding watermark and uploading the file into aws s3.
 
