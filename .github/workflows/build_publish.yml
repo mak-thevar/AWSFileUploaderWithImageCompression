@@ -23,12 +23,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Create Nuget package
-      run: dotnet pack -c Release -o .
+      run: dotnet pack -c Release -o output
     - name: Create artifact of the package
       uses: actions/upload-artifact@v3
       with:
         name: awsfileuploaderandcompressor
-        path: /*.nupkg
+        path: output/*.nupkg
   deploynugetpackage:
      name: deploy to nuget
      runs-on: ubuntu-latest
