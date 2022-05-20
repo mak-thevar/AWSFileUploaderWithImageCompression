@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: awsfileuploaderandcompressor
-        path: *.nupkg
+        path: /*.nupkg
   deploynugetpackage:
      name: deploy to nuget
      runs-on: ubuntu-latest
