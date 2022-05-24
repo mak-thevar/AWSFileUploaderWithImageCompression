@@ -113,7 +113,7 @@ namespace AWSFileUploaderWithImageCompression.Test
             var resp = await imgService.CompressAndUploadImageAsync(sourceFile);
 
             Assert.IsNotNull(resp);
-            Assert.IsTrue(resp.HttpStatusCode == System.Net.HttpStatusCode.OK);
+            Assert.IsTrue(resp.PutObjectResponse.HttpStatusCode == System.Net.HttpStatusCode.OK);
         }
 
 
