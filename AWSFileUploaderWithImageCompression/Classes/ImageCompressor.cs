@@ -18,7 +18,10 @@ namespace AWSFileUploaderWithImageCompression
         public ImageCompressor(Action<ImgCompressorConfiguration>? serviceConfiguration = null)
         {
             if (serviceConfiguration == null)
-                serviceConfiguration = (x) => new ImgCompressorConfiguration();
+                serviceConfiguration = (x) =>
+                {
+                    _ = new ImgCompressorConfiguration();
+                };
 
             var imgCompressorConfig = new ImgCompressorConfiguration();
             serviceConfiguration.Invoke(imgCompressorConfig);
@@ -70,8 +73,10 @@ namespace AWSFileUploaderWithImageCompression
                 var originalWidth = img.Width;
                 if (img.Height > serviceConfiguration.MaxHeight || img.Width > serviceConfiguration.MaxWidth)
                 {
-                    var imgGeo = new MagickGeometry();
-                    imgGeo.IgnoreAspectRatio = !serviceConfiguration.MaintainAspectRatio;
+                    var imgGeo = new MagickGeometry
+                    {
+                        IgnoreAspectRatio = !serviceConfiguration.MaintainAspectRatio
+                    };
                     if (img.Height > serviceConfiguration.MaxHeight)
                         imgGeo.Height = serviceConfiguration.MaxHeight;
                     else if (img.Width > serviceConfiguration.MaxWidth)
@@ -94,7 +99,7 @@ namespace AWSFileUploaderWithImageCompression
 
                 var optimizer = new ImageOptimizer();
                 memStream.Position = 0;
-                var comp = (img.Height > serviceConfiguration.MaxHeight || img.Width > serviceConfiguration.MaxWidth) ? optimizer.LosslessCompress(memStream) : false;
+                var comp = (img.Height > serviceConfiguration.MaxHeight || img.Width > serviceConfiguration.MaxWidth) && optimizer.LosslessCompress(memStream);
                 await File.WriteAllBytesAsync(outputFilePath, memStream.ToArray());
                 using var outputImage = new MagickImage(memStream);
                 return new ImageCompressorResponse

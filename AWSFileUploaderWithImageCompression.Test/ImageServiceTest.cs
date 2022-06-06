@@ -66,7 +66,7 @@ namespace AWSFileUploaderWithImageCompression.Test
 
             //Act
             var result = await imgService.ImageCompressor.CompressImage(originalFile.FullName, outputFileName);
-            var serializedResult = JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
+            _ = JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
 
             //Assert
             Assert.IsTrue(result.ImageCompressionSucccess == false);
@@ -84,7 +84,12 @@ namespace AWSFileUploaderWithImageCompression.Test
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);
             var sourceFile = File.OpenRead(Path.Combine(Environment.CurrentDirectory, "Assets", "Original", "LargeImages", "2.jpg"));
-            var outputFile = $"{Path.Combine(outputDirectory)}{Guid.NewGuid().ToString()}.jpg";
+            var outputFile = $"{Path.Combine(outputDirectory)}{Guid.NewGuid()}.jpg";
+
+
+            var s3Uploader = new Mock<IS3ImageUploader>();
+            s3Uploader.Setup(s => s.UploadAsync(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<string>(), null)).Returns(Task.FromResult(new PutObjectResponse() { HttpStatusCode = System.Net.HttpStatusCode.OK }));
+
 
             imgService.ImageCompressor.UpdateImageServiceConfiguration(options =>
             {

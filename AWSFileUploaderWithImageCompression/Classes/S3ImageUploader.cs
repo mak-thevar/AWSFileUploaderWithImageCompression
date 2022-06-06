@@ -25,10 +25,12 @@ namespace AWSFileUploaderWithImageCompression
         public async Task<PutObjectResponse> UploadAsync(Stream sourceImageStream, string bucketName = "", string key = "", S3StorageClass? storageClass = null)
         {
             var s3Client = new AmazonS3Client(awsCred, regionEndpoint);
-            var putReq = new PutObjectRequest();
-            putReq.BucketName = bucketName;
-            putReq.Key = string.IsNullOrEmpty(key) ? Guid.NewGuid().ToString() : key;
-            putReq.StorageClass = storageClass ?? S3StorageClass.Standard;
+            var putReq = new PutObjectRequest
+            {
+                BucketName = string.IsNullOrEmpty(bucketName) ? _bucketName : bucketName,
+                Key = string.IsNullOrEmpty(key) ? Guid.NewGuid().ToString() : key,
+                StorageClass = storageClass ?? S3StorageClass.Standard
+            };
             var putResp = await s3Client.PutObjectAsync(putReq);
             return putResp;
         }

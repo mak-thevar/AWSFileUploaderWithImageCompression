@@ -14,6 +14,12 @@ namespace AWSFileUploaderWithImageCompression
             this.s3Uploader = s3ImageUploader;
         }
 
+        public ImageService(IS3ImageUploader s3ImageUploader, Action<ImgCompressorConfiguration>? imgCompressorConfiguration)
+        {
+            this.imageComp = new ImageCompressor(imgCompressorConfiguration);
+            this.s3Uploader = s3ImageUploader;
+        }
+
         public IImageCompressor ImageCompressor { get => imageComp; set => imageComp = value; }
         public IS3ImageUploader S3ImageUploader { get => s3Uploader; set => s3Uploader = value; }
 
@@ -35,7 +41,7 @@ namespace AWSFileUploaderWithImageCompression
         public async Task<ImageServiceResponse> CompressWaterMarkAndUploadAsync(Stream sourceImageStream, Stream watermarkImage, string fileKeyName = "")
         {
             var tmpFile = Path.GetTempFileName();
-            var watermarkSuccess = await this.imageComp.AddWaterMark(sourceImageStream, watermarkImage, tmpFile);
+            _ = await this.imageComp.AddWaterMark(sourceImageStream, watermarkImage, tmpFile);
             return await CompressAndUploadImageAsync(File.OpenRead(tmpFile), fileKeyName);
         }
 
@@ -44,7 +50,7 @@ namespace AWSFileUploaderWithImageCompression
             return await CompressWaterMarkAndUploadAsync(File.OpenRead(sourceFilePath), watermarkImage, fileKeyName);
         }
 
-        private ImageServiceResponse SendResponse(PutObjectResponse putObjectResponse, ImageCompressorResponse imageCompressorResponse)
+        private static ImageServiceResponse SendResponse(PutObjectResponse putObjectResponse, ImageCompressorResponse imageCompressorResponse)
         {
             return new ImageServiceResponse
             {
