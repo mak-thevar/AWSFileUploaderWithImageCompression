@@ -12,5 +12,6 @@ namespace AWSFileUploaderWithImageCompression
 
         Task<ImageServiceResponse> CompressAndUploadImageAsync(string sourceFilePath, string fileKeyName = "");
         Task<ImageServiceResponse> CompressWaterMarkAndUploadAsync(string sourceFilePath, Stream watermarkImage, string fileKeyName = "");
+        Task<ImageServiceResponse> CompressWaterMarkAndUploadAsync(string sourceFilePath, string watermarkImagePath, string fileKeyName = "");
     }
 }

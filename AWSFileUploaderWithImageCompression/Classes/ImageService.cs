@@ -50,6 +50,11 @@ namespace AWSFileUploaderWithImageCompression
             return await CompressWaterMarkAndUploadAsync(File.OpenRead(sourceFilePath), watermarkImage, fileKeyName);
         }
 
+        public async Task<ImageServiceResponse> CompressWaterMarkAndUploadAsync(string sourceFilePath, string watermarkImagePath, string fileKeyName = "")
+        {
+            return await CompressWaterMarkAndUploadAsync(File.OpenRead(sourceFilePath), File.OpenRead(watermarkImagePath), fileKeyName);
+        }
+
         private static ImageServiceResponse SendResponse(PutObjectResponse putObjectResponse, ImageCompressorResponse imageCompressorResponse)
         {
             return new ImageServiceResponse
