@@ -9,7 +9,7 @@ namespace AWSFileUploaderWithImageCompression.Models
 {
     public class ImageServiceResponse
     {
-        public PutObjectResponse PutObjectResponse { get; set; }
-        public ImageCompressorResponse ImageCompressorResponse { get; set; }
+        public PutObjectResponse? PutObjectResponse { get; set; }
+        public ImageCompressorResponse? ImageCompressorResponse { get; set; }
     }
 }

@@ -10,7 +10,10 @@ namespace AWSFileUploaderWithImageCompression.Test
 {
     public class ImageServiceTest
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private IImageService imgService;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
 
         [OneTimeSetUp]
         public void Setup()
@@ -109,7 +112,7 @@ namespace AWSFileUploaderWithImageCompression.Test
             var resp = await imgService.CompressAndUploadImageAsync(sourceFile);
 
             Assert.IsNotNull(resp);
-            Assert.IsTrue(resp.PutObjectResponse.HttpStatusCode == System.Net.HttpStatusCode.OK);
+            Assert.IsTrue(resp.PutObjectResponse?.HttpStatusCode == System.Net.HttpStatusCode.OK);
         }
 
 
