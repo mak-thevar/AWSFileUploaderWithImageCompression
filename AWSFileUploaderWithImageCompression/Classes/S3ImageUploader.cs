@@ -29,7 +29,9 @@ namespace AWSFileUploaderWithImageCompression
             {
                 BucketName = string.IsNullOrEmpty(bucketName) ? _bucketName : bucketName,
                 Key = string.IsNullOrEmpty(key) ? Guid.NewGuid().ToString() : key,
-                StorageClass = storageClass ?? S3StorageClass.Standard
+                StorageClass = storageClass ?? S3StorageClass.Standard,
+                AutoResetStreamPosition = true,
+                InputStream = sourceImageStream,
             };
             var putResp = await s3Client.PutObjectAsync(putReq);
             return putResp;

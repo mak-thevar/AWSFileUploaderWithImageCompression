@@ -99,7 +99,7 @@ namespace AWSFileUploaderWithImageCompression
 
                 var optimizer = new ImageOptimizer();
                 memStream.Position = 0;
-                var comp = (img.Height > serviceConfiguration.MaxHeight || img.Width > serviceConfiguration.MaxWidth) && optimizer.LosslessCompress(memStream);
+                var comp = (img.Height >= serviceConfiguration.MaxHeight || img.Width >= serviceConfiguration.MaxWidth) && optimizer.LosslessCompress(memStream);
                 await File.WriteAllBytesAsync(outputFilePath, memStream.ToArray());
                 using var outputImage = new MagickImage(memStream);
                 return new ImageCompressorResponse
