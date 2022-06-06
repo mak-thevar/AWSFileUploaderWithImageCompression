@@ -1,7 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 
-namespace AWSFileUploaderWithImageCompression.Interfaces
+namespace AWSFileUploaderWithImageCompression
 {
     public interface IS3ImageUploader
     {

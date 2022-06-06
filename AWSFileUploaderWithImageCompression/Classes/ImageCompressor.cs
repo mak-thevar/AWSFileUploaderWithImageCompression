@@ -1,13 +1,7 @@
-﻿using AWSFileUploaderWithImageCompression.Classes.Models;
-using AWSFileUploaderWithImageCompression.Interfaces;
+﻿using AWSFileUploaderWithImageCompression.Models;
 using ImageMagick;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AWSFileUploaderWithImageCompression.Classes
+namespace AWSFileUploaderWithImageCompression
 {
     public class ImageCompressor : IImageCompressor
     {
@@ -21,9 +15,26 @@ namespace AWSFileUploaderWithImageCompression.Classes
             this.serviceConfiguration = serviceConfiguration;
         }
 
+        public ImageCompressor(Action<ImgCompressorConfiguration>? serviceConfiguration = null)
+        {
+            if (serviceConfiguration == null)
+                serviceConfiguration = (x) => new ImgCompressorConfiguration();
+
+            var imgCompressorConfig = new ImgCompressorConfiguration();
+            serviceConfiguration.Invoke(imgCompressorConfig);
+            this.serviceConfiguration = imgCompressorConfig;
+        }
+
         public void UpdateImageServiceConfiguration(ImgCompressorConfiguration serviceConfiguration)
         {
             this.serviceConfiguration = serviceConfiguration;
+        }
+
+        public void UpdateImageServiceConfiguration(Action<ImgCompressorConfiguration> serviceConfiguration)
+        {
+            var imgCompressorConfig = new ImgCompressorConfiguration();
+            serviceConfiguration.Invoke(imgCompressorConfig);
+            this.serviceConfiguration = imgCompressorConfig;
         }
 
 

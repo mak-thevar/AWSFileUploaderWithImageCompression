@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace AWSFileUploaderWithImageCompression.Classes.Models
+namespace AWSFileUploaderWithImageCompression.Models
 {
     public class ImageCompressorResponse
     {

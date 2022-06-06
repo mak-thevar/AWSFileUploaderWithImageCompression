@@ -1,6 +1,6 @@
-﻿using AWSFileUploaderWithImageCompression.Classes.Models;
+﻿using AWSFileUploaderWithImageCompression.Models;
 
-namespace AWSFileUploaderWithImageCompression.Interfaces
+namespace AWSFileUploaderWithImageCompression
 {
     public interface IImageCompressor
     {
@@ -9,5 +9,6 @@ namespace AWSFileUploaderWithImageCompression.Interfaces
         Task<ImageCompressorResponse> CompressImage(Stream imageStream, string outputFilePath);
         Task<ImageCompressorResponse> CompressImage(string sourceImagePath, string outputFilePath);
         void UpdateImageServiceConfiguration(ImgCompressorConfiguration serviceConfiguration);
+        void UpdateImageServiceConfiguration(Action<ImgCompressorConfiguration> serviceConfiguration);
     }
 }

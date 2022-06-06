@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AWSFileUploaderWithImageCompression.Classes.Models
+namespace AWSFileUploaderWithImageCompression.Models
 {
     public class ImgCompressorConfiguration
     {

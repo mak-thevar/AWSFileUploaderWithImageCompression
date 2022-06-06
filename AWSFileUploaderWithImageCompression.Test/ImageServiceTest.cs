@@ -1,13 +1,9 @@
-using Amazon;
-using AWSFileUploaderWithImageCompression.Classes;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Moq;
-using AWSFileUploaderWithImageCompression.Interfaces;
 using Amazon.S3.Model;
 
 namespace AWSFileUploaderWithImageCompression.Test
@@ -87,9 +83,9 @@ namespace AWSFileUploaderWithImageCompression.Test
             var sourceFile = File.OpenRead(Path.Combine(Environment.CurrentDirectory, "Assets", "Original", "LargeImages", "2.jpg"));
             var outputFile = $"{Path.Combine(outputDirectory)}{Guid.NewGuid().ToString()}.jpg";
 
-            imgService.ImageCompressor.UpdateImageServiceConfiguration(new Classes.Models.ImgCompressorConfiguration
+            imgService.ImageCompressor.UpdateImageServiceConfiguration(options =>
             {
-                WaterMarkTransperency = 5 //50% transparency
+                options.WaterMarkTransperency = 5; //50% transparency
             });
 
             //Act

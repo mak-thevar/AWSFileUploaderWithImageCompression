@@ -2,14 +2,8 @@
 using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
-using AWSFileUploaderWithImageCompression.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AWSFileUploaderWithImageCompression.Classes
+namespace AWSFileUploaderWithImageCompression
 {
     public class S3ImageUploader : IS3ImageUploader
     {
@@ -40,7 +34,7 @@ namespace AWSFileUploaderWithImageCompression.Classes
         }
 
 
-        public async Task<PutObjectResponse> UploadAsync(string sourceImagePath, string bucketName, string key = "", S3StorageClass? storageClass = null)
+        public async Task<PutObjectResponse> UploadAsync(string sourceImagePath, string bucketName = "", string key = "", S3StorageClass? storageClass = null)
         {
             return await UploadAsync(File.OpenRead(sourceImagePath), bucketName, key, storageClass);
         }

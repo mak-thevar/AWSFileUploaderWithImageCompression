@@ -1,8 +1,7 @@
 ﻿using Amazon.S3.Model;
-using AWSFileUploaderWithImageCompression.Classes.Models;
-using AWSFileUploaderWithImageCompression.Interfaces;
+using AWSFileUploaderWithImageCompression.Models;
 
-namespace AWSFileUploaderWithImageCompression.Classes
+namespace AWSFileUploaderWithImageCompression
 {
     public class ImageService : IImageService
     {
