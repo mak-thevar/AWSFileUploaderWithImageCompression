@@ -48,7 +48,15 @@ namespace AWSFileUploaderWithImageCompression
                 using var watermark = new MagickImage(waterMarkImageStream);
                 using var image = new MagickImage(sourceImageStream);
 
-                watermark.Resize(image.Width - 10, image.Height * 25 / 100);
+                // image.Width and image.Height are uint in new Magick.NET
+                uint currentWidth = image.Width;
+                uint currentHeight = image.Height;
+
+                // Ensure uint arithmetic
+                uint targetWidth = currentWidth > 10u ? currentWidth - 10u : 0u;
+                uint targetHeight = currentHeight * 25u / 100u;
+
+                watermark.Resize(targetWidth, targetHeight); // MagickImage.Resize(uint, uint)
                 watermark.Evaluate(Channels.Alpha, EvaluateOperator.Divide,serviceConfiguration.WaterMarkTransperency);
 
                 image.Composite(watermark, serviceConfiguration.WaterMarkPosition, CompositeOperator.Over);
@@ -68,28 +76,32 @@ namespace AWSFileUploaderWithImageCompression
         {
             try
             {
-                using var img = new MagickImage(imageStream);
-                var originalHeight = img.Height;
-                var originalWidth = img.Width;
-                if (img.Height > serviceConfiguration.MaxHeight || img.Width > serviceConfiguration.MaxWidth)
+                using var img = new MagickImage(imageStream); // img.Height, img.Width are uint
+                uint imgHeight = img.Height;
+                uint imgWidth = img.Width;
+                int originalHeight = (int)imgHeight; // Cast to int for response model
+                int originalWidth = (int)imgWidth;   // Cast to int for response model
+
+                if (imgHeight > (uint)serviceConfiguration.MaxHeight || imgWidth > (uint)serviceConfiguration.MaxWidth)
                 {
-                    var imgGeo = new MagickGeometry
+                    var imgGeo = new MagickGeometry // MagickGeometry.Height/Width are now uint based on error
                     {
                         IgnoreAspectRatio = !serviceConfiguration.MaintainAspectRatio
                     };
-                    if (img.Height > serviceConfiguration.MaxHeight)
-                        imgGeo.Height = serviceConfiguration.MaxHeight;
-                    else if (img.Width > serviceConfiguration.MaxWidth)
-                        imgGeo.Width = serviceConfiguration.MaxWidth;
-                    img.Resize(imgGeo);
+                    // Assign uint to uint for MagickGeometry
+                    if (imgHeight > (uint)serviceConfiguration.MaxHeight)
+                        imgGeo.Height = (uint)serviceConfiguration.MaxHeight; // Cast int to uint
+                    else if (imgWidth > (uint)serviceConfiguration.MaxWidth)
+                        imgGeo.Width = (uint)serviceConfiguration.MaxWidth; // Cast int to uint
+                    img.Resize(imgGeo); // Resize overload that takes MagickGeometry
                 }
                 else
                 {
                     return new ImageCompressorResponse
                     {
                         ImageCompressionSucccess = false,
-                        OriginalImageHeight = originalHeight,
-                        OriginalImageWidth = originalWidth,
+                        OriginalImageHeight = originalHeight, // Already int
+                        OriginalImageWidth = originalWidth,   // Already int
                         OriginalSizeInBytes = imageStream.Length,
                     };
                 }
@@ -99,9 +111,10 @@ namespace AWSFileUploaderWithImageCompression
 
                 var optimizer = new ImageOptimizer();
                 memStream.Position = 0;
-                var comp = (img.Height >= serviceConfiguration.MaxHeight || img.Width >= serviceConfiguration.MaxWidth) && optimizer.LosslessCompress(memStream);
+                // Compare uint with int (promoted to uint)
+                var comp = (imgHeight >= (uint)serviceConfiguration.MaxHeight || imgWidth >= (uint)serviceConfiguration.MaxWidth) && optimizer.LosslessCompress(memStream);
                 await File.WriteAllBytesAsync(outputFilePath, memStream.ToArray());
-                using var outputImage = new MagickImage(memStream);
+                using var outputImage = new MagickImage(memStream); // outputImage.Height/Width are uint
                 return new ImageCompressorResponse
                 {
                     ImageCompressionSucccess = comp,
@@ -109,10 +122,10 @@ namespace AWSFileUploaderWithImageCompression
                     AfterCompressionSizeInBytes = memStream.Length,
                     OutputFilePath = outputFilePath,
                     OutPutFileStream = memStream,
-                    OriginalImageWidth = originalWidth,
-                    OriginalImageHeight = originalHeight,
-                    ResizedImageHeight = outputImage.Height,
-                    ResizedImageWidth = outputImage.Width,
+                    OriginalImageWidth = originalWidth,     // Already int
+                    OriginalImageHeight = originalHeight,   // Already int
+                    ResizedImageHeight = (int)outputImage.Height, // Cast uint to int
+                    ResizedImageWidth = (int)outputImage.Width,   // Cast uint to int
                 };
             }
             catch (Exception)
