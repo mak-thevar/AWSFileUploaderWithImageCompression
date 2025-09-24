@@ -2,9 +2,13 @@
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555)](https://www.linkedin.com/in/mak11/)
 
 # AWSFileUploaderWithImageCompression
-A library for compressing, adding watermark and uploading the file into aws s3.
+A library for compressing, adding watermark and uploading the file into aws s3. The library targets **.NET 9.0**.
 
 This library uses [Magic.NET](https://github.com/dlemstra/Magick.NET) for compressing and adding watermark to the image.
+
+## Repository structure
+- `src/` – library implementation.
+- `tests/` – unit tests and sample assets.
 
 ## Features
 - Compress the image in a simplied way.
