@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AWSFileUploaderWithImageCompression", "AWSFileUploaderWithImageCompression\AWSFileUploaderWithImageCompression.csproj", "{84E4CA04-3628-44E6-9F00-2696E89E4D27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AWSFileUploaderWithImageCompression", "src\AWSFileUploaderWithImageCompression\AWSFileUploaderWithImageCompression.csproj", "{84E4CA04-3628-44E6-9F00-2696E89E4D27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSFileUploaderWithImageCompression.Test", "AWSFileUploaderWithImageCompression.Test\AWSFileUploaderWithImageCompression.Test.csproj", "{B827FA59-AC7E-46C3-8180-472A4A9D32D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSFileUploaderWithImageCompression.Test", "tests\AWSFileUploaderWithImageCompression.Test\AWSFileUploaderWithImageCompression.Test.csproj", "{B827FA59-AC7E-46C3-8180-472A4A9D32D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
